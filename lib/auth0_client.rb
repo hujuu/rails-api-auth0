@@ -1,5 +1,3 @@
-# app/lib/auth0_client.rb
-
 # frozen_string_literal: true
 
 require 'jwt'
@@ -54,7 +52,7 @@ class Auth0Client
 
 	decoded_token = decode_token(token, jwks_hash)
 
-	Response.new(decoded_token, nil)
+	Response.new(Token.new(decoded_token), nil)
   rescue JWT::VerificationError, JWT::DecodeError => e
 	error = Error.new('Bad credentials', :unauthorized)
 	Response.new(nil, error)
