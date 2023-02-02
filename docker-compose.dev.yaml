@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+    platform: linux/amd64
+    tty: true
+    stdin_open: true
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/myapp
+    environment:
+      RAILS_ENV: development
+
+  nginx:
+    build:
+      context: ./nginx
+    platform: linux/amd64
+    ports:
+      - 80:80
+    restart: always #明示的にstopさせるまでリスタートする。（失敗するたび遅延あり）
+    depends_on:
+      - web 
